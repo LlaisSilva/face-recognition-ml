@@ -1,0 +1,10 @@
+pyproject.toml
+src/face_recognition_app/__init__.py
+src/face_recognition_app/config.py
+src/face_recognition_app/embeddings.py
+src/face_recognition_app/face_engine.py
+src/face_recognition_app/recognition.py
+src/face_recognition_project.egg-info/PKG-INFO
+src/face_recognition_project.egg-info/SOURCES.txt
+src/face_recognition_project.egg-info/dependency_links.txt
+src/face_recognition_project.egg-info/top_level.txt
