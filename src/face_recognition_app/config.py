@@ -20,6 +20,9 @@ EMBEDDINGS_FILE = (
     EMBEDDINGS_DIR/"banco_embeddings.pkl"
 )
 
+CAMERA_EMBEDDINGS_FILE = EMBEDDINGS_DIR/"banco_camera.pkl"
+
+
 RESULTS_DIR = DATA_DIR/ "results"
 
 MODEL_NAME="buffalo_l"
