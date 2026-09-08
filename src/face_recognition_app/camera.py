@@ -17,7 +17,7 @@ class Camera:
         ret, frame = self.capture.read()
 
         if not ret:
-            raise RuntimeError("Could not read from camera")
+            return None
 
         return frame
 

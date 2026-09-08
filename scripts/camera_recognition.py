@@ -18,13 +18,17 @@ def main():
 
     print(f"Students loaded: {len(database)}")
 
-    camera = Camera(camera_id=0)
+    camera = Camera(camera_id=1)
 
     print("Camera started.")
     print("Press Q to exit.")
 
     while True:
         frame = camera.read()
+
+        if frame is None:
+            print("Warning: could not read frame")
+            continue
 
         faces = face_engine.get_face(frame)
 
@@ -42,7 +46,8 @@ def main():
 
         cv2.imshow("Face Recognition", frame)
 
-        camera.release()
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
 
 if __name__ == "__main__":
     main()

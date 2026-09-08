@@ -1,7 +1,7 @@
 from face_recognition_app.embeddings import build_embeddings_database, save_embeddings_database
 
 from face_recognition_app.face_engine import FaceEngine
-from face_recognition_app.config import CAMERA_EMBEDDINGS_FILE
+from face_recognition_app.config import CAMERA_EMBEDDINGS_FILE, CAMERA_DATABASE_DIR
 
 def main():
     print("=" * 60)
@@ -10,7 +10,8 @@ def main():
 
     face_engine = FaceEngine()
 
-    database = build_embeddings_database("", face_engine)
+    database = build_embeddings_database(CAMERA_DATABASE_DIR
+                                         , face_engine)
 
     save_embeddings_database(database, CAMERA_EMBEDDINGS_FILE)
 
