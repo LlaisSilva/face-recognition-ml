@@ -20,6 +20,8 @@ EMBEDDINGS_FILE = (
     EMBEDDINGS_DIR/"banco_embeddings.pkl"
 )
 
+CAMERA_DATABASE_DIR = DATA_DIR/"bd"
+
 CAMERA_EMBEDDINGS_FILE = EMBEDDINGS_DIR/"banco_camera.pkl"
 
 
