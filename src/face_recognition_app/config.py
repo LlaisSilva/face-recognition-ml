@@ -24,6 +24,8 @@ CAMERA_DATABASE_DIR = DATA_DIR/"bd"
 
 CAMERA_EMBEDDINGS_FILE = EMBEDDINGS_DIR/"banco_camera.pkl"
 
+CAMERA_ID= 0
+
 
 RESULTS_DIR = DATA_DIR/ "results"
 
@@ -35,4 +37,9 @@ PROVIDERS = [
     "CPUExecutionProvider"
 ]
 
+
 DEFAULT_THRESHOLD = 0.40
+
+EVENT_COOLDOWN = 10
+
+API_URL = "http://localhost:8000/api/events"

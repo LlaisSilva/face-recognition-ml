@@ -31,7 +31,7 @@ def generate_embeddings(image_path, face_engine):
 
 
 def build_embeddings_database(student_dir, face_engine):
-    """Iterate through all the students folders and create the embeddings database"""
+    """Build an embeddings database from a directory containing one folder per person"""
 
     student_dir = Path(student_dir)
 

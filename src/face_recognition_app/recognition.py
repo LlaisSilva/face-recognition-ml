@@ -1,7 +1,7 @@
 import numpy as np
 
-
 from .config import DEFAULT_THRESHOLD
+
 def calculate_similarity(embedding1, embedding2):
     """Calculate cosine similarity between two normalized embeddings"""
 
@@ -20,13 +20,15 @@ def recognize_face(embedding, embeddings_database,   threshold=DEFAULT_THRESHOLD
 
     best_similarity = -1.0
 
-    for student_name, student_embeddings in embeddings_database.items():
+    for person_name, person_embeddings in embeddings_database.items():
 
-        for student_embedding in student_embeddings:
-            similarity = calculate_similarity(embedding, student_embedding)
+        for person_embedding in person_embeddings:
+
+            similarity = calculate_similarity(embedding, person_embedding)
+
             if similarity> best_similarity:
                 best_similarity = similarity
-                best_name = student_name
+                best_name = person_name
 
 
     if best_similarity<threshold:

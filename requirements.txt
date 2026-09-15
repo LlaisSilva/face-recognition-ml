@@ -4,3 +4,4 @@ onnxruntime
 numpy
 scikit-learn
 kagglehub
+requests
