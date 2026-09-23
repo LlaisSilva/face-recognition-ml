@@ -1,7 +1,8 @@
 opencv-python
-insightface
+insightface==0.7.3
 onnxruntime
 numpy
 scikit-learn
 kagglehub
 requests
+python-dotenv

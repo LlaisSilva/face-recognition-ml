@@ -1,5 +1,10 @@
-from pathlib import Path
 
+from pathlib import Path
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
 PROJECT_ROOT= Path(__file__).resolve().parents[2]
 
 #Dataset
@@ -24,8 +29,10 @@ CAMERA_DATABASE_DIR = DATA_DIR/"bd"
 
 CAMERA_EMBEDDINGS_FILE = EMBEDDINGS_DIR/"banco_camera.pkl"
 
-CAMERA_ID= 0
 
+CAMERA_ID = os.getenv("CAMERA_ID")
+if CAMERA_ID.isdigit():
+    CAMERA_ID = int(CAMERA_ID)
 
 RESULTS_DIR = DATA_DIR/ "results"
 
@@ -42,4 +49,6 @@ DEFAULT_THRESHOLD = 0.40
 
 EVENT_COOLDOWN = 10
 
-API_URL = "http://localhost:8000/api/events"
+API_URL = os.getenv("API_URL")
+print("CAMERA_ID:", repr(CAMERA_ID))
+print("API_URL:", repr(API_URL))

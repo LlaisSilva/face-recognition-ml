@@ -7,6 +7,7 @@ __pycache__/
 .venv/
 venv/
 env/
+.venv38/
 
 # IDE
 .idea/
@@ -19,7 +20,10 @@ data/
 models/*.pkl
 models/*.pickle
 
-
+# Environment variables
+.env
+.env.*
+!.env.example
 
 # Jupyter
 .ipynb_checkpoints/

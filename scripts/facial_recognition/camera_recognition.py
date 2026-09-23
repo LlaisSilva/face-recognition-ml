@@ -17,8 +17,6 @@ from face_recognition_app.events import build_event
 from face_recognition_app.api_client import send_event
 
 
-camera_url = 0
-
 
 class EventManager:
     """Controls how often an event can be generated.
@@ -195,7 +193,7 @@ def main():
     )
 
     app = CameraRecognition(
-        camera_id=camera_url,
+        camera_id=CAMERA_ID,
         api_url=API_URL,
         embeddings_database=database
     )
