@@ -4,6 +4,8 @@ import os
 
 from dotenv import load_dotenv
 
+from face_recognition_app.api_client import BACKEND_URL
+
 load_dotenv()
 PROJECT_ROOT= Path(__file__).resolve().parents[2]
 
@@ -34,6 +36,9 @@ CAMERA_ID = os.getenv("CAMERA_ID")
 if CAMERA_ID.isdigit():
     CAMERA_ID = int(CAMERA_ID)
 
+CAMERA_ID_2 = os.getenv("CAMERA_ID_2")
+
+
 RESULTS_DIR = DATA_DIR/ "results"
 
 MODEL_NAME="buffalo_l"
@@ -49,6 +54,14 @@ DEFAULT_THRESHOLD = 0.40
 
 EVENT_COOLDOWN = 10
 
-API_URL = os.getenv("API_URL")
+BACKEND_URL = os.getenv("BACKEND_URL")
+AIBOX_API_KEY =os.getenv("AIBOX_API_KEY")
 print("CAMERA_ID:", repr(CAMERA_ID))
-print("API_URL:", repr(API_URL))
+BACKEND_IMAGES_DIR = (
+    DATA_DIR / "backend_images"
+)
+
+BACKEND_IMAGES_DIR.mkdir(
+    parents=True,
+    exist_ok=True
+)

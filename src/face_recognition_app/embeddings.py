@@ -1,109 +1,68 @@
-import cv2
 import pickle
 from pathlib import Path
 
 
-def generate_embeddings(image_path, face_engine):
-    """Detect all the faces of an image and return an embedding for each face"""
+def generate_embedding(image, face_engine):
+    """
+    Generate a facial embedding for an image.
 
-    image_path = Path(image_path)
+    """
+    embedding = face_engine.generate_embedding(image)
+    return embedding
 
-    image = cv2.imread(str(image_path))
 
-    if image is None:
-        print(f"Error it was not possible to read"
-              f"{image_path}")
-        return []
-
-    faces = face_engine.get_face(image)
-
-    if len(faces) == 0:
-        print(f"Warning: No face found "
-              f"{image_path}")
-        return []
-
+def build_job_embeddings(job, downloaded_images, face_engine):
+    """
+    Generate facial embeddings for all images in a job.
+    """
     embeddings = []
+    samples = []
 
-    for face in faces:
-        embeddings.append(face.normed_embedding)
+    for item in downloaded_images:
+        sample_index = item["sample_index"]
+        image = item["image"]
 
-    return embeddings
+        print(f"[EMBEDDING] Processing sample {sample_index}")
 
+        embedding = generate_embedding(image, face_engine)
 
-def build_embeddings_database(student_dir, face_engine):
-    """Build an embeddings database from a directory containing one folder per person"""
-
-    student_dir = Path(student_dir)
-
-    database = {}
-
-    if not student_dir.exists():
-        raise FileNotFoundError(f"Folder not found"
-                                f"{student_dir}")
-
-    for students_folder in sorted(student_dir.iterdir()):
-        if not students_folder.is_dir():
+        if embedding is None:
+            print(f"[EMBEDDING] FAILED sample={sample_index}")
             continue
 
-        student_name = students_folder.name
+        embeddings.append(embedding)
+        samples.append(sample_index)
 
-        register_dir = students_folder/"register"
+        print(f"[EMBEDDING] OK sample={sample_index} dimensions={len(embedding)}")
 
-        if not register_dir.exists():
-            print(f"Warning: Register folder not found {student_name}")
-            continue
-
-        database[student_name] = []
-        print(f"student: {student_name}")
-
-
-        for image_path in sorted(register_dir.iterdir()):
-
-            if image_path.suffix.lower() not in {".jpg",".jpeg",".png"}:
-                continue
-
-            embeddings = generate_embeddings(image_path, face_engine)
-
-            if len(embeddings) == 0:
-                continue
-
-            if len(embeddings) > 1:
-                print(
-                f"Warning: More than one face found " f"in {image_path.name}. " f"Image ignored.")
-                continue
-            embedding = embeddings[0]
-            database[student_name].append(embedding)
-
-            print(f"Ok {image_path.name}")
-
-        #if no valid image are found remove the student from database
-
-        if len(database[student_name])==0:
-            del database[student_name]
-            print("Warning: No valid embedding ")
-    return database
-
+    return {
+        "identifier": job.get("identifier"),
+        "person_type": job.get("person_type"),
+        "enrollment_id": job.get("enrollment_id"),
+        "job_id": job.get("job_id"),
+        "embeddings": embeddings,
+        "samples": samples
+    }
 
 
 def save_embeddings_database(database, output_path):
-    """Save the embedding database as a picke file"""
-
-    output_path= Path(output_path)
-
+    """
+    Save the embeddings database locally.
+    """
+    output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    with open(output_path,"wb")as file:
+    with open(output_path, "wb") as file:
         pickle.dump(database, file)
 
-    print(f"Banco salvo em: "
-          f"{output_path}")
+    print(f"[DATABASE] Saved: {output_path}")
+
 
 def load_embeddings_database(database_path):
-    """Load the embeddings database"""
-
+    """
+    Load the local embeddings database.
+    """
     database_path = Path(database_path)
 
-    with open(database_path,"rb")as file:
-        database = pickle.load(file)
-
-    return database
+    with open(database_path, "rb") as file:
+        return pickle.load(file)
